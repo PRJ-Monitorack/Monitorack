@@ -1,0 +1,52 @@
+name: Deploy HTML Files to Server via OpenVPN
+
+on:
+  pull_request:
+    branches:
+      - dev  # Déclenche l'action lors d'une PR vers la branche dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1: Vérifier le code du repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Étape 2: Installer OpenVPN
+      - name: Install OpenVPN
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openvpn3
+
+      # Étape 3: Créer un fichier de réponse automatique pour OpenVPN (nom d'utilisateur et mot de passe)
+      - name: Create OpenVPN password file
+        run: |
+          echo -e "${{ secrets.VPN_USERNAME }}\n${{ secrets.VPN_PASSWORD }}" > /tmp/vpn_password.txt
+
+      # Étape 4: Connecter au VPN en utilisant le fichier .ovpn et le fichier de mot de passe
+      - name: Connect to OpenVPN
+        run: |
+          echo "${{ secrets.VPN_CONFIG }}" > /tmp/openvpn_config.ovpn
+          sudo openvpn3 session start --config /tmp/openvpn_config.ovpn --auth-user-pass /tmp/vpn_password.txt &
+          sleep 10  # Attends un peu pour être sûr que la connexion VPN est établie
+
+      # Étape 5: Ajouter la clé SSH pour se connecter au serveur
+      - name: Add SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      # Étape 6: Copier les fichiers HTML sur le serveur via SSH
+      - name: Deploy HTML Files to Server
+        run: |
+          # Remplace 'user' par ton nom d'utilisateur SSH sur ton serveur
+          # Remplace '/path/to/your/website' par le chemin du répertoire sur ton serveur où les fichiers HTML doivent être placés
+          ssh -o StrictHostKeyChecking=no user@10.255.0.103 "
+            cd /path/to/your/website && 
+            git pull origin dev && 
+            rm -rf * && 
+            cp -r /path/to/your/local/html/* . 
+          "
