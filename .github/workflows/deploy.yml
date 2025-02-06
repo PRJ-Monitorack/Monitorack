@@ -42,11 +42,10 @@ jobs:
       # Étape 6: Copier les fichiers HTML sur le serveur via SSH
       - name: Deploy HTML Files to Server
         run: |
-          # Remplace 'user' par ton nom d'utilisateur SSH sur ton serveur
-          # Remplace '/path/to/your/website' par le chemin du répertoire sur ton serveur où les fichiers HTML doivent être placés
-          ssh -o StrictHostKeyChecking=no user@10.255.0.103 "
-            cd /path/to/your/website && 
-            git pull origin dev && 
-            rm -rf * && 
-            cp -r /path/to/your/local/html/* . 
+          # Connexion SSH au serveur et déploiement des fichiers HTML
+          ssh -o StrictHostKeyChecking=no admin02@10.255.0.103 "
+            cd /var/www/html && 
+            rm -rf * &&  # Supprimer les fichiers existants
+            cp -r $GITHUB_WORKSPACE/* . &&  # Copier les fichiers du dépôt vers le serveur
+            ls -la  # Vérifier si les fichiers ont bien été copiés
           "
