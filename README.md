@@ -50,7 +50,8 @@ Le système est constitué de plusieurs composants :
 
 ## Diagramme des Cas d'Utilisation
 
-![Diagramme des Cas d'Utilisation](./assets/screen%20diagramme%20usecase.PNG)
+![Diagramme des Cas d'Utilisation](./assets/Cas%20d'utlisation.png)
+
 
 ## Tâches des Étudiants
 
