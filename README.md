@@ -43,7 +43,7 @@ Voici un diagramme de l'infrastructure prévue :
 
 ![Diagramme d'Infrastructure](./assets/visio.png)
 
-(C:\Users\matty\Downloads\visio(2).png)
+(C:\Users\matty\Downloads\visio (2).png)
 
 Le système est constitué de plusieurs composants :
 - **Passerelle Onduleur** : collecte les données des onduleurs et des capteurs, puis les envoie à une passerelle LoRaWAN.
