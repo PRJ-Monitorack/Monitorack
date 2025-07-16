@@ -41,7 +41,7 @@ L'objectif du projet est de développer une **passerelle de surveillance** capab
 
 Voici un diagramme de l'infrastructure prévue :
 
-![Diagramme d'Infrastructure](./assets/visio (2).png)
+![Diagramme d'Infrastructure](./assets/visio(2).png)
 
 Le système est constitué de plusieurs composants :
 - **Passerelle Onduleur** : collecte les données des onduleurs et des capteurs, puis les envoie à une passerelle LoRaWAN.
